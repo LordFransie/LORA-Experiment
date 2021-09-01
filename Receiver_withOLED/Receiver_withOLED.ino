@@ -1,9 +1,12 @@
 #include "Arduino.h"
 #include "heltec.h"
+#include "lora_config.h"
 
 
-#define RXD2 19
-#define TXD2 22
+
+
+
+
 String received = "FRESH";
 void setup() {
   
@@ -12,6 +15,7 @@ void setup() {
   delay(1000);
   Heltec.begin(true /*DisplayEnable Enable*/, false /*LoRa Disable*/, false /*Serial Enable*/);
   Serial2.begin(115200, SERIAL_8N1, RXD2, TXD2);
+  loraSetup();
   Serial.println("Loopback program started");
   Heltec.display->clear();
   Heltec.display->setTextAlignment(TEXT_ALIGN_CENTER);
@@ -38,16 +42,15 @@ void writeMessage(String message){
 
   // I wrote this entire stupid logic block
   // Just to add an exclamation mark at the end
-  if(message.substring(9,13).startsWith("B")){
+  if(message.substring(11,15).startsWith("B")){
     Heltec.display->drawString(0, 0, "It's a Boy!");
   } else {
     Heltec.display->drawString(0,0, "It's a Girl!");
   }
   Heltec.display->setFont(ArialMT_Plain_10);
-  Heltec.display->drawString(0, 53, "SSI: "+message.substring(14,17));
+  Heltec.display->drawString(0, 53, "SSI: "+message.substring(16,19));
   Heltec.display->display();
 }
-
 
 void loop() {
 

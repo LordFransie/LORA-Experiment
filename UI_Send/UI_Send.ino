@@ -1,5 +1,6 @@
 #include "Arduino.h"
 #include "heltec.h"
+#include "lora_config.h"
 
 #define RXD2 19
 #define TXD2 22
@@ -38,6 +39,8 @@ void setup() {
   Heltec.display->flipScreenVertically();
 
   Serial2.begin(115200, SERIAL_8N1, RXD2, TXD2);
+  loraSetup();
+  
   
   Serial.begin(115200);
   pinMode(ledPin, OUTPUT);
